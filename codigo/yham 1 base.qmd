@@ -1,0 +1,63 @@
+------------------------------------------------------------------------
+
+title: "Conseptos basicos de R y Restudio pro"  # Título principal del documento
+subtitle: "TALLER_1"  # Subtítulo del documento
+date: today  # Fecha actual en formato español
+author:  # Información sobre los autores
+  - name: Carlos Mario González Guerra  # Nombres de los autores, separados por <br> para salto de línea en HTML
+    affiliation: "Escuela Superior de Administración Pública"  # Afiliación de los autores (ESAP)
+    affiliation-url: "https://www.esap.edu.co/"  # URL que lleva a la página web de la universidad
+title-block-banner: "#ffc100"  # Color del banner de título en formato hexadecimal
+lang: es  # Idioma del documento, en este caso en español
+format:
+  html:  # Formato de salida en HTML
+    page-layout: full  # Configura el diseño de la página para usar el ancho completo
+    fontsize: 16pt  # Tamaño de la fuente del documento (16 puntos)
+    toc: true  # Activa la tabla de contenido
+    toc-location: right  # Ubicación de la tabla de contenido (a la izquierda)
+    number-sections: true  # Activa la numeración de las secciones
+    code-fold: true  # Permite ocultar el código, mostrando solo un resumen con "Ver código"
+    code-summary: "Ver código"  # El texto mostrado para los resúmenes de código oculto
+    html-math-method: katex  # Usa Katex para representar las fórmulas matemáticas en HTML
+    smooth-scroll: true  # Activa el desplazamiento suave al navegar por la página
+    link-external-icon: true  # Muestra un ícono en los enlaces externos
+    link-external-newwindow: true  # Los enlaces externos se abren en una nueva ventana
+    citations-hover: true  # Activa el efecto hover (desplegar) en las citas
+    footnotes-hover: true  # Activa el efecto hover (desplegar) en las notas al pie
+    theme: "dark"  # Opción de tema alternativo con mayor contraste
+    highlight-style: "Monokai"  # Resaltado de código con contraste
+    code-overflow: "scroll"  # Controla desbordamiento de código en pantallas pequeñas
+    favicon: "favicon.ico"  # Favicon para el sitio web
+    background-color: "#536980"  # Fondo azul baby para todo el documento
+    text-align: justify  # Alineación justificada para el texto
+    color: "#333333"  # Color del texto (gris oscuro para mejorar la legibilidad)
+    link-color: "#3892f8"  # Color de los enlaces (azul)
+    heading-color: "#3892f8"  # Color de los encabezados (azul)
+editor: visual  # Usa el editor visual para la creación del documento en RStudio
+knitr:
+  opts_chunk:  # Opciones predeterminadas para los bloques de código (chunks) de R
+    message: false  # Mostrar mensajes generados por el código
+    warning: false  # Mostrar advertencias si es necesario
+    fig.align: "center"  # Alinea las figuras generadas al centro
+    fig.width: 6  # Ajusta el tamaño de las figuras a 6 unidades
+    fig.height: 6  # Ajusta la altura de las figuras a 6 unidades
+    out.width: "70%"  # Asegura que las figuras se adapten al 70% del ancho disponible
+---
+
+1.- Se sabe que el 60% de los alumnos de una universidad asisten a clases el viernes. En una encuesta a 8 alumnos de la universidad. ¿Cuál es la probabilidad de que a) por lo menos siete asistan a clase el viernes? b) por lo menos dos no asistan a clase.
+
+# Datos
+
+n \<- 8 p \<- 0.6 p_no \<- 0.4
+
+# a) Al menos 7 asisten
+
+prob_a \<- 1 - pbinom(6, n, p)
+
+# b) Al menos 2 no asisten
+
+prob_b \<- 1 - pbinom(1, n, p_no)
+
+# Resultados
+
+prob_a prob_b
