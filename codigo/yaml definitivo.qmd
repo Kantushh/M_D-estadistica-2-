@@ -1,13 +1,13 @@
 ---
-title: "DISTRIBUCIONES DE FRECUENCIAS"  # Título principal del documento
-subtitle: "TALLER"  # Subtítulo del documento
+title: "Estadistica 2"  # Título principal del documento
+subtitle: "TALLER 1 modelos discretos de probabilidad"  # Subtítulo del documento
 date: today  # Fecha actual en formato español
 author:  # Información sobre los autores
   - name: Carlos Mario gonzalez guerra <br> Leidy Lorena Garcia  # Nombres de los autores, separados por <br> para salto de línea en HTML
     affiliation: "Escuela uperior de Administración Publica"  # Afiliación de los autores (nombre de la universidad)
     affiliation-url: "https://https://www.esap.edu.co//"  # URL que lleva a la página web de la universidad
 lang: es  # Idioma del documento, en este caso en español
-title-block-banner: "#ffc100"
+title-block-banner: "#3892f8"
 format:
   html:  # Formato de salida en HTML
     page-layout: full  # Configura el diseño de la página para usar el ancho completo
@@ -43,37 +43,206 @@ knitr:
     out.width: "70%"  # Asegura que las figuras se adapten al 70% del ancho disponible
 ---
 
-```{=html}
-<div style="position: absolute; top: 10px; right: 10px;">
-  <img src="Logo_ut.png" alt="Logo Universidad del Tolima" style="width: 150px; height: auto;">
-</div>
-```
+# 
 
-```{=html}
-<style type="text/css">
-  body {
-    font-size: 130%;
-    text-align: justify;
-  }
-</style>
-```
+# 1. Distribución Binomial
+
+\[ X \sim Bin(n=8,p=0.6) \]
 
 ```{r}
-# Verificar, instalar y activar el paquete "tidyverse"
-if (!require(tidyverse)) {
-  install.packages("tidyverse")
-}
-library(tidyverse)
+pbinom(q=7 - 1, size=8, prob=0.6, lower.tail=FALSE, log.p = FALSE)
 
-# Verificar, instalar y activar el paquete "kableExtra"
-if (!require(kableExtra)) {
-  install.packages("kableExtra")
-}
-library(kableExtra)
-
-# Verificar, instalar y activar el paquete "readxl"
-if (!require(readxl)) {
-  install.packages("readxl")
-}
-library(readxl)
+dbinom(x=7, size=8, prob=0.6,log = FALSE)
 ```
+M %>% 
+
+```{r}
+
+```
+
+
+
+# Probabilidad de por lo menos 7 estudiantes
+pbinom(6,8,0.6,lower.tail=FALSE)
+
+# Probabilidad de exactamente 7 estudiantes
+dbinom(7,8,0.6)
+
+
+## a) Por lo menos siete asistan
+
+\[ P(X \geq 7)=P(X=7)+P(X=8) \]
+
+\[ P(X=7)=\binom{8}{7}(0.6)^7(0.4)^1 \]
+
+\[ P(X=8)=\binom{8}{8}(0.6)^8(0.4)^0 \]
+
+\[ P(X\geq7)=0.1064 \]
+
+## b) Por lo menos dos no asistan
+
+\[ Y \sim Bin(n=8,p=0.4) \]
+
+\[ P(Y\geq2)=1-P(Y=0)-P(Y=1) \]
+
+\[ P(Y\geq2)=0.8936 \]
+
+# 2. Distribución Binomial
+
+\[ X \sim Bin(n=6,p=0.05) \]
+
+\[ P(X\<3)=P(X\leq2) \]
+
+\[ P(X\leq2)=\sum\_{x=0}^{2}^\binom{6}{x}(0.05)x(0.95)\^{6-x} \]
+
+\[ P(X\<3)=0.9978 \]
+
+# 3. Distribución Binomial
+
+\[ X \sim Bin(n=15,p=0.1) \]
+
+## a) Exactamente 5 defectuosas
+
+\[ P(X=5)=\binom{15}{5}(0.1)^5(0.9)^{10} \]
+
+\[ P(X=5)=0.0008 \]
+
+## b) Por lo menos 10 defectuosas
+
+\[ P(X\geq10)=1-P(X\leq9) \]
+
+\[ P(X\geq10)=0.0000 \]
+
+## c) No más de 4 defectuosas
+
+\[ P(X\leq4)=\sum\_{x=0}^{4}^\binom{15}{x}(0.1)x(0.9)\^{15-x} \]
+
+\[ P(X\leq4)=0.9901 \]
+
+# 4. Distribución Binomial
+
+\[ X \sim Bin(n=7,p=0.25) \]
+
+\[ P(X\geq3)=1-P(X\leq2) \]
+
+\[ P(X\geq3)=0.2436 \]
+
+# 5. Distribución Binomial
+
+\[ X \sim Bin(n=4,p=0.3) \]
+
+## a) Exactamente uno no paga
+
+\[ P(X=1)=\binom{4}{1}(0.3)^1(0.7)^3 \]
+
+\[ P(X=1)=0.4116 \]
+
+## b) Todos pagan
+
+\[ P(X=0)=\binom{4}{0}(0.3)^0(0.7)^4 \]
+
+\[ P(X=0)=0.2401 \]
+
+# 6. Distribución de Poisson
+
+\[ \lambda=20\\left(\frac{15}{120}\right)=2.5 \]
+
+\[ X \sim Poisson(\lambda=2.5) \]
+
+\[ P(X\leq2)=\sum\_{x=0}^{2}\\frac{e^{-2.5}(2.5)\^x}{x!} \]
+
+\[ P(X\leq2)=0.5438 \]
+
+# 7. Distribución de Poisson
+
+## a)
+
+\[ \lambda=6.8(0.5)=3.4 \]
+
+\[ P(X\geq2)=1-P(X\leq1) \]
+
+\[ P(X\geq2)=0.8527 \]
+
+## b)
+
+\[ X \sim Poisson(\lambda=6.8) \]
+
+\[ P(X\>1)=1-P(X\leq1) \]
+
+\[ P(X\>1)=0.9917 \]
+
+# 8. Distribución de Poisson
+
+\[ \lambda=\frac{12}{60}=0.2 \]
+
+\[ P(X\geq2)=1-P(X\leq1) \]
+
+\[ P(X\geq2)=0.0175 \]
+
+## Valor esperado
+
+\[ E(X)=\lambda=0.2 \]
+
+# 9. Distribución de Poisson
+
+\[ X \sim Poisson(\lambda=10) \]
+
+\[ P(X\leq12)=\sum\_{x=0}^{12}\\frac{e^{-10}(10)\^x}{x!} \]
+
+\[ P(X\leq12)=0.7916 \]
+
+# 10. Distribución de Poisson
+
+\[ X \sim Poisson(\lambda=5) \]
+
+\[ P(X\leq2)=\sum\_{x=0}^{2}\\frac{e^{-5}(5)\^x}{x!} \]
+
+\[ P(X\leq2)=0.1247 \]
+
+# 11. Distribución Hipergeométrica
+
+\[ X \sim Hipergeométrica(N=25,K=6,n=4) \]
+
+\[ P(X=2)= \frac{\binom{6}{2}\binom{19}{2}} {\binom{25}{4}} \]
+
+\[ P(X=2)=0.2277 \]
+
+# 12. Distribución Hipergeométrica
+
+\[ P= \frac{\binom{15}{5}} {\binom{20}{10}} \]
+
+\[ P=0.0163 \]
+
+# 13. Distribución Hipergeométrica
+
+\[ P(X=5)= \frac{\binom{6}{5}\binom{4}{0}} {\binom{10}{5}} \]
+
+\[ P(X=5)=0.0238 \]
+
+# 14. Distribución de Poisson
+
+\[ \lambda=6000\\left(\frac{1}{2000}\right)=3 \]
+
+\[ X \sim Poisson(\lambda=3) \]
+
+\[ P(X\>3)=1-P(X\leq3) \]
+
+\[ P(X\>3)=0.3528 \]
+
+# 15. Distribución Geométrica
+
+\[ P(X\leq3)=1-(1-0.7)\^3 \]
+
+\[ P(X\leq3)=0.973 \]
+
+# 16. Distribución Geométrica
+
+\[ P(X=8)=(0.9)\^7(0.1) \]
+
+\[ P(X=8)=0.0478 \]
+
+# 17. Distribución Binomial Negativa
+
+\[ P(X=20)= \binom{19}{1}(0.05)^2(0.95)^{18} \]
+
+\[ P(X=20)=0.0189 \]

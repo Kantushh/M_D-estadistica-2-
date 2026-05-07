@@ -1,5 +1,4 @@
-------------------------------------------------------------------------
-
+---
 title: "Conseptos basicos de R y Restudio pro"  # Título principal del documento
 subtitle: "TALLER_1"  # Subtítulo del documento
 date: today  # Fecha actual en formato español
