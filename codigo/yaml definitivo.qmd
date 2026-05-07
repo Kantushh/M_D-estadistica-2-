@@ -47,6 +47,8 @@ knitr:
 
 # 1. Distribución Binomial
 
+
+
 \[ X \sim Bin(n=8,p=0.6) \]
 
 ```{r}

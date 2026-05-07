@@ -1,188 +1,61 @@
----
----
-title: "Aplicación de estadistico"
-subtitle: "TALLER_2A"
-date: today
-author:
-  - name: Carlos Mario González Guerra
-    affiliation: "Escuela Superior de Administración Pública"
-    affiliation-url: "https://www.esap.edu.co/"
-title-block-banner: "#ffc100"
-lang: es
-format:
-  html:
-    page-layout: full
-    fontsize: 16pt
-    # --- CAMBIOS AQUÍ ---
-    toc-float: 
-      collapsed: true     # La TOC estará inicialmente escondida/colapsada
-      smooth-scroll: true # Mantiene el desplazamiento suave
-      location: right     # Mantiene la ubicación a la derecha
-    # --------------------
-    toc: true            # Mantiene la tabla de contenido (necesario para toc-float)
-    number-sections: true
-    code-fold: true
-    code-summary: "Ver código"
-    html-math-method: katex
-    smooth-scroll: true
-    link-external-icon: true
-    link-external-newwindow: true
-    citations-hover: true
-    footnotes-hover: true
-    theme: "dark"
-    highlight-style: "Monokai"
-    code-overflow: "scroll"
-    favicon: "favicon.ico"
-    background-color: "#536980"
-    text-align: justify
-    color: "#333333"
-    link-color: "#3892f8"
-    heading-color: "#3892f8"
-editor: visual
-knitr:
-  opts_chunk:
-    message: false
-    warning: false
-    fig.align: "center"
-    fig.width: 6
-    fig.height: 6
-    out.width: "70%"
-# Asegura que las figuras se adapten al 70% del ancho disponible
----
 
-```{=html}
-<div style="position: absolute; top: 80px; right: 40px;">
-  <img src="https://www.esap.edu.co/wp-content/uploads/2021/04/logo-esap.png" alt="Territorial Tolima" style="width: 450px; height: auto;">
-</div>
-```
 
-```{=html}
-<style type="text/css">
-  body {
-    font-size: 130%;
-    text-align: justify;
-  }
-</style>
-```
+# DISTRIBUCION BINOMIAL
 
- **Codígo para instalar**
+# n = 8 alumnos, p = 0.60 (asisten el viernes)
+
+
+n \<- 8 p \<- 0.60
+
+![](images/clipboard-212126395.png)
+
+# --- Inciso a) P(X \>= 7) ---
 
 ```{r}
-if(!require(tidyverse)){
-  install.packages("tidyverse")}
-library(tidyverse)
+p_x7 <- dbinom(7, size = n, prob = p)
+p_x8 <- dbinom(8, size = n, prob = p)
+p_a  <- p_x7 + p_x8
 
-if(!require(palmerpenguins)){
-  install.packages("palmerpenguins")}
-library(palmerpenguins)
+cat("P(X = 7) =", round(p_x7, 4), "\n")
+cat("P(X = 8) =", round(p_x8, 4), "\n")
+cat("P(X >= 7) =", round(p_a, 4), "\n")
 
-if(!require(psych)){
-  install.packages("psych")}
-library(psych)
-
-if(!require(modeest)){
-  install.packages("modeest")}
-library(modeest)
-
-if(!require(ggthemes)){
-  install.packages("ggthemes")}
-library(ggthemes)
-
-if(!require(ggplot2)){
-  install.packages("ggplot2")}
-library(ggplot2)
-
-if(!require(e1071)){
-  install.packages("e1071")}
-library(e1071)
+p_a2 <- pbinom(6, size = n, prob = p, lower.tail = FALSE)
+cat("Verificacion pbinom:", round(p_a2, 4), "\n")
 ```
 
-## 1. ESTADISTICOS
-
-
-En el contexto de las ciencias, la estadística es una disciplina que se ocupa de la recoleccón, análisis e interpretación de datos. Los estadísticos son las medidas de resumen o describen aspectos clave de un conjunto de datos. Estas medidas permiten hacer inferencias, identificar patrones, y comprender la variabilidad de los datos.
-
-$$\bar{x} = \frac{\sum x_i}{n}$$
-```{r}
-set.seed(222)
-datos <- sample(1:10, size = 20, replace = TRUE)
-datos
-```
-```{r}
-palmerpenguins::penguins$body_mass_g %>% mean(na.rm = TRUE)
-```
-```{r}
-(palmerpenguins::penguins$body_mass_g %>%  sum(na.rm = TRUE))/342
-```
+# --- Inciso b) P(Y \>= 2) ---
 
 ```{r}
-sum(datos)/length(datos)
-```
-```{r}
-mean(datos)
-```
-```{r}
-tibble(x = 1:length(datos), y = datos) %>% 
-  ggplot() +
-  geom_hline(yintercept = mean(datos), color = 2
-             , linetype = "dashed") + 
-  geom_segment(aes(x = x, xend = x, y = mean(datos), yend = datos)) + 
-  geom_point(aes(x = x, y = datos), color = 2, size = 4) + 
-  scale_y_continuous(breaks = seq(0, 10, by = 2)) + 
-  labs(
-    x = "", y = "Datos"
-  )
-```
-$$bar{y} = \frac{\sum y_i \, n_i}{n}$$
+q <- 1 - p
+p_y0 <- dbinom(0, size = n, prob = q)
+p_y1 <- dbinom(1, size = n, prob = q)
+p_b  <- 1 - (p_y0 + p_y1)
 
+cat("P(Y = 0) =", round(p_y0, 4), "\n")
+cat("P(Y = 1) =", round(p_y1, 4), "\n")
+cat("P(Y >= 2) =", round(p_b, 4), "\n")
 
-$$n = \sum_{i=1}^{k} n_i$$
+p_b2 <- pbinom(1, size = n, prob = q, lower.tail = FALSE)
+cat("Verificacion pbinom:", round(p_b2, 4), "\n")
+```
+
+# --- Grafica ---
+
+x \<- 0:n prob_x \<- dbinom(x, size = n, prob = p)
 
 ```{r}
-set.seed(555)
-peso <- round(rnorm(200, mean = 60, sd = 5), 1)
-peso
+
+barplot(prob_x,
+        names.arg = x,
+        col = ifelse(x >= 7, "#1D9E75", "#B4B2A9"),
+        main = "Distribucion Binomial (n=8, p=0.60)",
+        xlab = "Numero de alumnos que asisten",
+        ylab = "Probabilidad",
+        ylim = c(0, 0.32),
+        border = NA)
 ```
 
-```{r}
-interv = cut(x = peso, breaks = seq(43, 79, by = 4), include.lowest = TRUE, right = TRUE)
-tabla_1 <- tibble(Peso = interv) %>% 
-  group_by(Peso) %>%
-  summarise(fi = n()) %>% 
-  mutate(
-    mi = seq(45, 77, by = 4)
-  ) %>% 
-  relocate(Peso, mi, fi) %>% 
-  mutate(
-    hi = fi/sum(fi),
-    Fi = cumsum(fi),
-    Hi = cumsum(hi),
-    mifi = mi*fi
-  )
-tabla_1
-```
+**a)** La probabilidad de que **al menos 7 alumnos** asistan a clases el viernes es aproximadamente **0,1064 (10,64%)**, resultado obtenido sumando P(X = 7) y P(X = 8). Esto indica que, aunque la mayoría de alumnos tiende a asistir, es poco probable que casi todos lo hagan simultáneamente en un grupo de 8.
 
-```{r}
-Peso1 = factor(c("[1,20]", "(47,51]"))
-
-```
-
-
-
-```{r}
-sum(tabla_1$mifi)/length(peso)
-```
-```{r}
-mean(peso)
-```
-# Media Geométrica
-
-
-2 La media geométrica es una medida de tendencia central que se usa para promediar valores positivos que están relacionados multiplicativamente, no aditivamente.
-
-En lugar de sumar los datos como en la media aritmética, la media geométrica:
-
-Multiplica todos los valores.
-
-Toma la raíz n-ésima (según la cantidad de datos).
-
+**b)** La probabilidad de que **al menos 2 alumnos no asistan** es aproximadamente **0,6846 (68,46%)**, lo que refleja que es bastante frecuente que dos o más estudiantes se ausenten un viernes, considerando que el 40% de la población no asiste regularmente.
